@@ -13,6 +13,8 @@ require "action_text/engine"
 require "action_view/railtie"
 require "action_cable/engine"
 require "ibm_watson"
+require 'json'
+
 
 # require "sprockets/railtie"
 # require "rails/test_unit/railtie"

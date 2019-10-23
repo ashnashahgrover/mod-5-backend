@@ -2,7 +2,11 @@ class PoemsController < ApplicationController
 
   def create
     poem = Poem.create(poem_params)
-    render json: poem
+    nlu_results = NLU.analyze({:html=>poem.content, :features=>{ :emotion=>{}, :sentiment=>{} } })
+    nlu_string = JSON.generate(nlu_results.result)
+    poem.update(nlu:nlu_string)
+    nlu_json = JSON.parse(nlu_string)
+    render json: {poem: poem, nlu: nlu_json}
   end
 
   def user_poems
