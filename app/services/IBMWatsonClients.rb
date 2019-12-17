@@ -5,38 +5,41 @@ class IBMWatsonClients
 
   include IBMWatson
 
-  def NLU_client
-    NLU_APIKEY = Rails.application.credentials.NLU_IAM_KEY
-    # VERSION = ENV['ibm_watson_version']
-    NLU_URL = Rails.application.credentials.NLU_URL
+  NLU_APIKEY = Rails.application.credentials.NLU_IAM_KEY
+  # VERSION = ENV['ibm_watson_version']
+  NLU_URL = Rails.application.credentials.NLU_URL
+
+  PI_APIKEY= Rails.application.credentials.PI_IAM_KEY
+  # VERSION = ENV['ibm_watson_version']
+  PI_URL = Rails.application.credentials.PI_URL
+
+  def self.NLU_client
 
     nlu_authenticator = Authenticators::IamAuthenticator.new(
         apikey: NLU_APIKEY
     )
 
-    NLU = NaturalLanguageUnderstandingV1.new(
-        version: "2019-07-12",
-        authenticator: nlu_authenticator
+    nlu = NaturalLanguageUnderstandingV1.new(
+      version: "2019-07-12",
+      authenticator: nlu_authenticator
     )
 
-    NLU.service_url = NLU_URL
-    return NLU
+    nlu.service_url = NLU_URL
+    return nlu
+
   end
 
-  def PI_client
-    PI_APIKEY= Rails.application.credentials.PI_IAM_KEY
-    # VERSION = ENV['ibm_watson_version']
-    PI_URL = Rails.application.credentials.PI_URL
+  def self.PI_client
 
     pi_authenticator = Authenticators::IamAuthenticator.new(
         apikey: PI_APIKEY
     )
-    PI = PersonalityInsightsV3.new(
+    pi = PersonalityInsightsV3.new(
       version: "2017-10-13",
       authenticator: pi_authenticator
     )
-    PI.service_url = PI_URL
-    return PI
+    pi.service_url = PI_URL
+    return pi
   end
 
 end
