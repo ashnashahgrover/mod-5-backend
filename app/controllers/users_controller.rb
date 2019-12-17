@@ -2,12 +2,10 @@ class UsersController < ApplicationController
 
   def create
     user = User.create(user_params)
-    if user.valid?
-      render json: user, status: :created
-    else
-      render json: {messages: user.errors.full_messages}
+    if !user.valid?
+      return render json: {messages: user.errors.full_messages}
     end
-
+    render json: user, status: :created
   end
 
   private
